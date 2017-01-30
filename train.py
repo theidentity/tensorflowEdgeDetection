@@ -16,9 +16,9 @@ testLabel = np.load("label.npy")
 X, Y, testX, testY = trainSet,trainLabel,testSet,testLabel
 X = X.reshape([-1, 32, 32, 1])
 testX = testX.reshape([-1, 32, 32, 1])
-# batchsize = 25
-# Y = Y.reshape([-1,batchsize,1])
-# testY = testY.reshape([-1,batchsize,1])
+batchsize = 100
+Y = Y.reshape([-1,batchsize,1])
+testY = testY.reshape([-1,batchsize,1])
 print(testX.shape)
 print(testY.shape)
 
@@ -39,7 +39,7 @@ network = regression(network, optimizer='adam', learning_rate=0.01,
                  loss='mean_square', name='target')
 
 # Training
-model = tflearn.DNN(network, tensorboard_verbose=0)
+model = tflearn.DNN(network, tensorboard_verbose=2)
 model.fit({'input': X}, {'target': Y}, n_epoch=20,
            validation_set=({'input': testX}, {'target': testY}),
            snapshot_step=100, show_metric=True, run_id='convnet_mnist')
